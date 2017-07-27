@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Blog Posts
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Hi, here are some blog posts.</h1>
+        <div class="col-md-8">
+            {% for post in posts %}
+                <div class="row">
+                    <h3>{{ post.title }}</h3>
+                    <em>By {{ post.author.name }}</em>
+                    <br><br>
+                    <p>{{ post.body }}</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="col-md-4">
+            <h3>Add a Post</h3>
+            <form method="post" action="{{ path('put_post') }}">
+                <div class="form-group">
+                    <label for="new-post-author">Author</label>
+                    <select id="new-post-author" class="form-control" name="author" required>
+                        {% for author in authors %}
+                            <option value="{{ author.id }}">{{ author.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="new-post-title">Post Title</label>
+                    <input id="new-post-title" class="form-control" name="title" placeholder="Post Title" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="new-post-body">Post Body</label>
+                    <textarea id="new-post-body" class="form-control" name="body" placeholder="Post Body" required></textarea>
+                </div>
+                <button class="btn btn-default" type="submit">Add Post</button>
+            </form>
+
+            <h3>Add an Author</h3>
+            <form method="post" action="{{ path('put_author') }}">
+                <div class="form-group">
+                    <label for="new-author-name">Author Name</label>
+                    <input id="new-author-name" class="form-control" name="name" placeholder="Author Name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="new-author-publisher">Author Publisher</label>
+                    <input id="new-author-publisher" class="form-control" name="publisher" placeholder="Author Publisher">
+                </div>
+                <button class="btn btn-default" type="submit">Add Author</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+{% endblock %}
