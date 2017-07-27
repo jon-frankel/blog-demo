@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,39 +29,52 @@ class Tag
      */
     private $name;
 
+    /**
+     * @var Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Post", mappedBy="tags")
+     */
+    private $posts;
 
     /**
-     * Get id
-     *
+     * Tag constructor.
+     * @param string $name
+     */
+    public function __construct(string $name)
+    {
+        $this->name = $name;
+    }
+
+    /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Tag
+     * @return string
      */
-    public function setName($name)
+    public function getName(): string
     {
-        $this->name = $name;
-
-        return $this;
+        return $this->name;
     }
 
     /**
-     * Get name
-     *
-     * @return string
+     * @param string $name
      */
-    public function getName()
+    public function setName(string $name)
     {
-        return $this->name;
+        $this->name = $name;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getPosts(): Collection
+    {
+        return $this->posts;
     }
 }
 

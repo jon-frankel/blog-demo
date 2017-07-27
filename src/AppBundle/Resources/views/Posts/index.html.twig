@@ -17,10 +17,20 @@
         <div class="col-md-8">
             {% for post in posts %}
                 <div class="row">
-                    <h3>{{ post.title }}</h3>
+                    <h3>
+                        {{ post.title }}
+                        <form action="{{ path('delete_post', {'post': post.id}) }}">
+                            <input type="hidden" name="id" value="{{ post.id }}">
+                            <button type="submit" class="btn btn-xs btn-danger">Delete</button>
+                        </form>
+                    </h3>
                     <em>By {{ post.author.name }}</em>
                     <br><br>
                     <p>{{ post.body }}</p>
+
+                    {% for tag in post.tags %}
+                        <button type="button" class="btn btn-primary btn-xs">{{ tag.name }}</button>
+                    {% endfor %}
                 </div>
             {% endfor %}
         </div>
@@ -33,6 +43,15 @@
                     <select id="new-post-author" class="form-control" name="author" required>
                         {% for author in authors %}
                             <option value="{{ author.id }}">{{ author.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="new-post-tags">Tags</label>
+                    <select multiple size="5" id="new-post-tags" class="form-control" name="tags[]" required>
+                        {% for tag in tags %}
+                            <option value="{{ tag.id }}">{{ tag.name }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -61,6 +80,15 @@
                     <input id="new-author-publisher" class="form-control" name="publisher" placeholder="Author Publisher">
                 </div>
                 <button class="btn btn-default" type="submit">Add Author</button>
+            </form>
+
+            <h3>Add Tag</h3>
+            <form method="post" action="{{ path('put_tag') }}">
+                <div class="form-group">
+                    <label for="new-tag-name">Tag Name</label>
+                    <input id="new-tag-name" class="form-control" name="name" placeholder="Tag Name" required>
+                </div>
+                <button class="btn btn-default" type="submit">Add Tag</button>
             </form>
         </div>
     </div>

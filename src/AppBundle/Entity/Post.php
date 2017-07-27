@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,6 +43,18 @@ class Post
      * @ORM\ManyToOne(targetEntity="Author", inversedBy="posts")
      */
     private $author;
+
+    /**
+     * @var Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="posts", cascade={"persist"})
+     */
+    private $tags;
+
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -96,6 +110,35 @@ class Post
     public function setAuthor(Author $author)
     {
         $this->author = $author;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param array $tags
+     */
+    public function setTags(array $tags)
+    {
+        $this->tags = new ArrayCollection($tags);
+    }
+
+    /**
+     * @param Tag $tag
+     */
+    public function addTag(Tag $tag)
+    {
+        $this->tags->add($tag);
+    }
+
+    public function removeTag(Tag $tag)
+    {
+        $this->tags->removeElement($tag);
     }
 }
 
