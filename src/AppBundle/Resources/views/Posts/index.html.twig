@@ -9,11 +9,35 @@
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <style type="text/css">
+        .container {
+            margin-bottom: 50px;
+        }
+        a.button:hover {
+            text-decoration: none;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
     <div class="container">
         <h1>Hi, here are some blog posts.</h1>
+
+        {% set tagIds = [] %}
+        {% for tag in tags %}
+            {% set tagIds = tagIds|merge([tag.id]) %}
+        {% endfor %}
+
+        <p>
+            <a class="button" href="{{ path('get_posts', {'tags': tagIds|join(',')}) }}">
+                <button class="btn btn-sm btn-primary">All Tags</button>
+            </a>
+            <a class="button" href="{{ path('get_posts') }}">
+                <button class="btn btn-sm btn-default">Clear</button>
+            </a>
+        </p>
+
         <div class="col-md-8">
             {% for post in posts %}
                 <div class="row">
@@ -28,8 +52,11 @@
                     <br><br>
                     <p>{{ post.body }}</p>
 
+
                     {% for tag in post.tags %}
-                        <button type="button" class="btn btn-primary btn-xs">{{ tag.name }}</button>
+                        <a class="button" href="{{ path('get_posts', {'tags': tag.id}) }}">
+                            <button type="button" class="btn btn-primary btn-xs">{{ tag.name }}</button>
+                        </a>
                     {% endfor %}
                 </div>
             {% endfor %}

@@ -24,10 +24,10 @@ class PostsController extends Controller
      *
      * @param Request $request
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $context = [
-            'posts' => $this->getDoctrine()->getRepository(Post::class)->findAll(),
+            'posts' => $this->getDoctrine()->getRepository(Post::class)->findByTags($request->query->get('tags')),
             'authors' => $this->getDoctrine()->getRepository(Author::class)->findAll(),
             'tags' => $this->getDoctrine()->getRepository(Tag::class)->findAll(),
         ];

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Post;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -12,4 +13,27 @@ use Doctrine\ORM\EntityRepository;
  */
 class PostRepository extends EntityRepository
 {
+    /**
+     * @param string|null $tags
+     * @return Post[]
+     */
+    public function findByTags(string $tags = null): array
+    {
+        if (is_null($tags)) {
+            return $this->findAll();
+        }
+
+        $tags = explode(',', $tags);
+        $tags = array_map(function ($i) { return (int) $i; }, $tags);
+
+        $qb = $this->_em->createQueryBuilder();
+        $qb
+            ->select('post')
+            ->from($this->_entityName, 'post')
+            ->join('post.tags', 'tags', 'WITH', $qb->expr()->in('tags.id', ':tags'))
+            ->setParameter('tags', $tags)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
 }
