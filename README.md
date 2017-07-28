@@ -1,4 +1,4 @@
 blog-demo
 =========
 
-A Symfony project created on July 27, 2017, 2:37 pm.
+See [feature/tags](/tree/feature/tags) for the tag entity and migration.
