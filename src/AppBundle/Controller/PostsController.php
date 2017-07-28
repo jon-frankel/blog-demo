@@ -34,11 +34,11 @@ class PostsController extends Controller
     }
 
     /**
-     * @Route("/put", name="put_post", methods={"post"})
+     * @Route("/post", name="post_post", methods={"post"})
      *
      * @param Request $request
      */
-    public function putPostAction(Request $request)
+    public function postPostAction(Request $request)
     {
         $post = new Post();
         $post->setTitle($request->request->get('title'));

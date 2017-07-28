@@ -27,7 +27,7 @@
 
         <div class="col-md-4">
             <h3>Add a Post</h3>
-            <form method="post" action="{{ path('put_post') }}">
+            <form method="post" action="{{ path('post_post') }}">
                 <div class="form-group">
                     <label for="new-post-author">Author</label>
                     <select id="new-post-author" class="form-control" name="author" required>
@@ -50,7 +50,7 @@
             </form>
 
             <h3>Add an Author</h3>
-            <form method="post" action="{{ path('put_author') }}">
+            <form method="post" action="{{ path('post_author') }}">
                 <div class="form-group">
                     <label for="new-author-name">Author Name</label>
                     <input id="new-author-name" class="form-control" name="name" placeholder="Author Name" required>

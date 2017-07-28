@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 class AuthorsController extends Controller
 {
     /**
-     * @Route("/put", name="put_author", methods={"post"})
+     * @Route("/post", name="post_author", methods={"post"})
      *
      * @param Request $request
      */
